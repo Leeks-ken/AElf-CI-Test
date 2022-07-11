@@ -147,8 +147,7 @@ Task("Test-with-Codecov-N")
     };
     var codecovToken = "$CODECOV_TOKEN";
     var actions = new List<Action>();
-    # var testProjects = GetFiles("./test/*.Tests/*.csproj");
-    var testProjects = GetFiles("./test/AElf.Contracts.AEDPoSExtension.Demo.Tests/*.csproj");
+    var testProjects = GetFiles("./test/*.Tests/*.csproj");
     var testProjectList = testProjects.OrderBy(p=>p.FullPath).ToList();
     var n = Argument("n",1);
     var parts = Argument("parts",1);
