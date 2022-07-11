@@ -195,6 +195,16 @@ Task("Upload-Coverage")
         Codecov(report.FullPath,"$CODECOV_TOKEN");
     }
 });
+Task("Upload-Coverage-GitHubActions")
+    .Does(() =>
+{
+    var reports = GetFiles("./test/*.Tests/TestResults/*.trx");
+
+    foreach(var report in reports)
+    {
+        Codecov(report.FullPath,"$CODECOV_TOKEN");
+    }
+});
 Task("Upload-Coverage-Azure")
     .Does(() =>
 {
