@@ -1,0 +1,31 @@
+name: test
+
+on:
+  push:
+    branches: [ "dev", "master", "releases/v*" ]
+  pull_request:
+    branches: [ "dev" ]
+
+env:
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+jobs:
+  build_all_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: CODECOV_TOKEN
+      run: echo "1111111 $CODECOV_TOKEN"
+    - name: Install protobuf
+      run: bash scripts/install_protobuf.sh
+    - name: download contract plugin
+      run: bash scripts/download_binary.sh
+    - name: Unit Test
+      run: bash build.sh -target=Test-with-Codecov-N --parts=3 --n=2
+    - name: Upload Coverage
+      run: bash build.sh -target=Upload-Coverage-GitHubActions
+
